@@ -10,8 +10,8 @@ st.set_page_config(
 )
 
 # Load model & scaler
-Model = joblib.load("model/loan_prediction_model.pkl")
-scaler = joblib.load("model/scaler.pkl")
+Model = joblib.load("Model/loan_prediction_model.pkl")
+scaler = joblib.load("Model/scaler.pkl")
 
 # ---------- HEADER ----------
 st.markdown(
