@@ -68,7 +68,7 @@ st.markdown("---")
 
 # ---------- PREDICTION ----------
 if st.button("🔍 Predict Loan Status", use_container_width=True):
-    input_data = np.array([[
+    input_data = np.array([[  
         no_of_dependents,
         education,
         self_employed,
@@ -83,15 +83,23 @@ if st.button("🔍 Predict Loan Status", use_container_width=True):
     ]])
 
     input_scaled = scaler.transform(input_data)
-    prediction = Model.predict(input_scaled)
+
+    probability = Model.predict_proba(input_scaled)[0][1]
+
+    THRESHOLD = 0.35
+    prediction = 1 if probability >= THRESHOLD else 0
 
     st.markdown("## 🧾 Prediction Result")
+    st.write(f"**Risk Probability:** {probability:.2f}")
+    # st.write(f"**Decision Threshold:** {THRESHOLD}")
 
-    if prediction[0] == 1:
+    if prediction == 1:
+        st.error("❌ **Loan Rejected** ⚠️")
+        st.warning("High risk of default detected.")
+    else:
         st.success("✅ **Loan Approved** 🎉")
         st.balloons()
-    else:
-        st.error("❌ **Loan Rejected** ⚠️")
+
 
 # ---------- FOOTER ----------
 st.markdown(
